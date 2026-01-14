@@ -1,0 +1,13 @@
+server: "Anarchy1"
+
+mysql:
+  host: "localhost"
+  port: "3306"
+  database: "rebelland_prod"
+  username: "root"
+  password: "Gleb1234"
+
+redis:
+  host: "localhost"
+  port: 6379
+  password: ""

@@ -1,0 +1,4 @@
+name: RCore
+version: '${project.version}'
+main: org.rebelland.rcore.RCore
+api-version: '1.16'
