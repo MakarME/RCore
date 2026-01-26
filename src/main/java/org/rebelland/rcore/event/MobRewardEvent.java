@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jspecify.annotations.NonNull;
 
 public class MobRewardEvent extends Event implements Cancellable {
 
@@ -86,7 +85,7 @@ public class MobRewardEvent extends Event implements Cancellable {
     // --- Обязательный Boilerplate для Bukkit Event API ---
 
     @Override
-    public @NonNull HandlerList getHandlers() {
+    public HandlerList getHandlers() {
         return handlers;
     }
 
