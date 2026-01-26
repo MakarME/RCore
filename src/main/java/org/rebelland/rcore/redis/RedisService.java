@@ -67,6 +67,15 @@ public class RedisService {
         });
     }
 
+    public Map<String, String> hgetAll(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.hgetAll(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return java.util.Collections.emptyMap();
+        }
+    }
+
     public void shutdown() {
         if (subscriber != null) {
             subscriber.punsubscribe();
