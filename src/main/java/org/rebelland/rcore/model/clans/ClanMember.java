@@ -44,11 +44,11 @@ public class ClanMember {
         if (o == null || getClass() != o.getClass()) return false;
         ClanMember that = (ClanMember) o;
         return clanId == that.clanId &&
-                Objects.equals(uuid, that.uuid);
+                Objects.equals(uuid, that.uuid) && rank.equals(that.rank);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clanId, uuid);
+        return Objects.hash(clanId, uuid, rank);
     }
 }
