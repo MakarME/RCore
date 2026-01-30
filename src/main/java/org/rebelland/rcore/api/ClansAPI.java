@@ -46,4 +46,6 @@ public interface ClansAPI {
     List<ClanHome> getHomesForServer(int clanId, String server);
 
     ClanHome getHomeByName(int clanId, String homeName);
+
+    boolean isClanChatOn(UUID uuid);
 }
