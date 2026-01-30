@@ -19,11 +19,7 @@ public class GlobalPlayerManager implements Listener {
     private static final int HEARTBEAT_INTERVAL_TICKS = 60; // 3 сек
     private static final int REDIS_TTL_SECONDS = 5;         // 5 сек
 
-    private final String currentServerName;
-
     public GlobalPlayerManager() {
-        this.currentServerName = MainConfig.SERVER;
-
         startHeartbeatTask();
     }
 
@@ -31,7 +27,7 @@ public class GlobalPlayerManager implements Listener {
         Common.runTimerAsync(20, HEARTBEAT_INTERVAL_TICKS, () ->{
             Map<UUID, String> onlineMap = new HashMap<>();
             for (Player player : Bukkit.getOnlinePlayers()) {
-                onlineMap.put(player.getUniqueId(), currentServerName);
+                onlineMap.put(player.getUniqueId(), MainConfig.SERVER);
             }
             if (!onlineMap.isEmpty()) {
                 RCore.getInstance().getRedisService().sendHeartbeat(onlineMap, REDIS_TTL_SECONDS);
@@ -43,7 +39,7 @@ public class GlobalPlayerManager implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         RCore.getInstance().getRedisService().updatePlayerHeartbeat(
                 event.getPlayer().getUniqueId(),
-                currentServerName,
+                MainConfig.SERVER,
                 REDIS_TTL_SECONDS
         );
     }
@@ -56,7 +52,7 @@ public class GlobalPlayerManager implements Listener {
     public String getGlobalPlayerServer(UUID targetUuid) {
         Player localPlayer = Bukkit.getPlayer(targetUuid);
         if (localPlayer != null) {
-            return currentServerName;
+            return MainConfig.SERVER;
         }
         return RCore.getInstance().getRedisService().getPlayerServer(targetUuid);
     }
