@@ -1,5 +1,7 @@
 package org.rebelland.rcore.api;
 
+import net.kyori.adventure.text.TextComponent;
+import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.Common;
 import org.rebelland.rcore.RCore;
 import org.rebelland.rcore.model.boosts.ActiveBoost;
@@ -34,4 +36,12 @@ public interface BoostAPI {
     void equipBoostToCache(UUID uuid, ActiveBoost activeBoost);
 
     void unequipBoostFromCache(UUID uuid, int slot);
+
+    String generateBoostTitle(Boost boost);
+
+    List<String> generateBoostLore(Boost boost);
+
+    ItemStack getBoostItem(Boost boost);
+
+    TextComponent getBoostStar(Boost boost);
 }
