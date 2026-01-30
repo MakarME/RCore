@@ -59,6 +59,43 @@ public class RedisService {
         });
     }
 
+    /**
+     * Универсальный кулдаун для всей сети.
+     *
+     * @param namespace Откуда вызов (например, "social", "clans", "items")
+     * @param action    Действие (например, "join_notify", "teleport")
+     * @param id        Уникальный ID (UUID игрока или ID клана)
+     * @param seconds   Время в секундах
+     * @return true, если кулдаун установлен успешно (его не было), false если еще активен
+     */
+    public boolean setCooldown(String namespace, String action, String id, int seconds) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String key = String.format("rebelland:cooldown:%s:%s:%s", namespace, action, id);
+
+            // Используем NX (только если нет) и EX (время жизни)
+            String result = jedis.set(key, "1", redis.clients.jedis.params.SetParams.setParams().nx().ex(seconds));
+
+            return "OK".equals(result);
+        } catch (Exception e) {
+            RCore.getInstance().getLogger().warning("Redis cooldown error for " + action);
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Проверить, остался ли кулдаун (не обновляя его).
+     * Полезно, если нужно просто узнать статус, не перезаписывая таймер.
+     */
+    public long getRemainingCooldown(String namespace, String action, String id) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String key = String.format("rebelland:cooldown:%s:%s:%s", namespace, action, id);
+            return Math.max(0, jedis.ttl(key)); // TTL возвращает секунды до удаления
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
     public void publish(String channel, String message) {
         CompletableFuture.runAsync(() -> {
             try (Jedis jedis = jedisPool.getResource()) {
@@ -134,15 +171,15 @@ public class RedisService {
         });
     }
 
-    /**
-     * Мгновенное обновление статуса одного игрока (для onJoin).
-     */
-    public void updatePlayerHeartbeat(UUID uuid, String serverName, int ttlSeconds) {
-        CompletableFuture.runAsync(() -> {
+    public CompletableFuture<Void> updatePlayerHeartbeat(UUID uuid, String serverName, int ttlSeconds) {
+        return CompletableFuture.runAsync(() -> {
             try (Jedis jedis = jedisPool.getResource()) {
+                // Синхронная операция внутри асинхронного потока
+                // Мы ждем, пока Redis реально запишет данные
                 jedis.setex("rebelland:player:" + uuid.toString(), ttlSeconds, serverName);
             } catch (Exception e) {
                 e.printStackTrace();
+                throw new RuntimeException("Redis error", e);
             }
         });
     }
