@@ -128,9 +128,6 @@ public class PlaytimeService implements Listener {
 
             // 4. Отправляем батч запрос
             UserRepository.getInstance().updatePlaytimeBatch(batch);
-
-            Common.log("Saved playtime for " + batch.size() + " players.");
-
         });
     }
 
