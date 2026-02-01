@@ -12,10 +12,9 @@ public class SocialCache {
     private final List<BlockedPlayer> blockedPlayers;
     private final List<UUID> incomingRequests;
     private long reputation;
-    private boolean pingsEnabled; // НОВОЕ ПОЛЕ
 
     public SocialCache(UUID uuid, String name, PlayerSettings settings, List<Friend> friends,
-                       List<BlockedPlayer> blocked, List<UUID> requests, long reputation, boolean pingsEnabled) {
+                       List<BlockedPlayer> blocked, List<UUID> requests, long reputation) {
         this.uuid = uuid;
         this.name = name;
         this.settings = settings;
@@ -23,11 +22,11 @@ public class SocialCache {
         this.blockedPlayers = blocked;
         this.incomingRequests = requests;
         this.reputation = reputation;
-        this.pingsEnabled = pingsEnabled;
     }
 
-    public boolean isPingsEnabled() { return pingsEnabled; }
-    public void setPingsEnabled(boolean pingsEnabled) { this.pingsEnabled = pingsEnabled; }
+    public PingMode getPingMode() {
+        return settings.getPingMode();
+    }
 
     public String getName() { return name; }
     public UUID getUuid() { return uuid; }
