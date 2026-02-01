@@ -7,11 +7,14 @@ public enum SocialAction {
     FRIEND_JOIN,
     FRIEND_DECLINE,
     FRIEND_CHANGE_SERVER,
+    FRIEND_SETTINGS_CHANGE,
     FRIEND_QUIT,
     BLACKLIST_ADD,
     BLACKLIST_REMOVE,
+    BLACKLIST_SETTINGS_CHANGE,
     REP_ADD,
-    REP_REMOVE;
+    REP_REMOVE,
+    GLOBAL_SETTINGS_CHANGE;
 
     public static SocialAction fromString(String str) {
         try {
