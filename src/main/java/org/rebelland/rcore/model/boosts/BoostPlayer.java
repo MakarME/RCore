@@ -3,14 +3,14 @@ package org.rebelland.rcore.model.boosts;
 import java.util.UUID;
 import java.util.Map;
 
-public class PlayerInfo {
+public class BoostPlayer {
     private final UUID uuid;
     private final String name;
     // ИЗМЕНЕНО: Теперь это карта редкостей, а не одно число
     private final Map<Rarity, Integer> shards;
     private int maxSlots;
 
-    public PlayerInfo(UUID uuid, String name, Map<Rarity, Integer> shards, int maxSlots) {
+    public BoostPlayer(UUID uuid, String name, Map<Rarity, Integer> shards, int maxSlots) {
         this.uuid = uuid;
         this.name = name;
         this.shards = shards;

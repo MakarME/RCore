@@ -2,14 +2,11 @@ package org.rebelland.rcore.api;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.inventory.ItemStack;
-import org.mineacademy.fo.Common;
-import org.rebelland.rcore.RCore;
 import org.rebelland.rcore.model.boosts.ActiveBoost;
 import org.rebelland.rcore.model.boosts.Boost;
-import org.rebelland.rcore.model.boosts.PlayerInfo;
+import org.rebelland.rcore.model.boosts.BoostPlayer;
 import org.rebelland.rcore.model.boosts.Rarity;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public interface BoostAPI {
@@ -19,7 +16,7 @@ public interface BoostAPI {
 
     ActiveBoost getActiveBoost(UUID uuid, int slot);
 
-    PlayerInfo getInfo(UUID uuid);
+    BoostPlayer getInfo(UUID uuid);
 
     Map<Rarity, Integer> getPlayerShards(UUID uuid);
 
