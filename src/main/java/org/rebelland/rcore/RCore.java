@@ -11,7 +11,9 @@ import org.rebelland.rcore.database.DatabaseService;
 import org.rebelland.rcore.database.UserRepository;
 import org.rebelland.rcore.listener.GlobalPlayerManager;
 import org.rebelland.rcore.listener.UserListener;
+import org.rebelland.rcore.manager.HologramManager;
 import org.rebelland.rcore.redis.RedisService;
+import org.rebelland.rcore.service.PlayerIdentityService;
 import org.rebelland.rcore.service.PlaytimeService;
 
 public final class RCore extends SimplePlugin {
@@ -52,6 +54,8 @@ public final class RCore extends SimplePlugin {
         registerEvents(new UserListener());
         registerEvents(new GlobalPlayerManager());
         PlaytimeService.getInstance();
+        PlayerIdentityService.getInstance();
+        HologramManager.getInstance().load();
     }
 
     @Override
@@ -59,6 +63,7 @@ public final class RCore extends SimplePlugin {
         PlaytimeService.getInstance().shutdown();
         if (redisService != null) redisService.shutdown();
         if (databaseService != null) databaseService.shutdown();
+        HologramManager.getInstance().shutdown();
     }
 
     public static void setBoostAPI(BoostAPI api) {
