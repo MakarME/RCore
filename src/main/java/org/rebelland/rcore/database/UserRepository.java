@@ -28,7 +28,8 @@ public class UserRepository {
                     "  uuid VARCHAR(36) PRIMARY KEY," +
                     "  name VARCHAR(16) NOT NULL," +
                     "  last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
-                    "  ip_address VARCHAR(45)" +
+                    "  ip_address VARCHAR(45)," +
+                    "  INDEX idx_name (name)" +
                     ") DEFAULT CHARSET=utf8mb4";
 
             stmt.execute(sql);
